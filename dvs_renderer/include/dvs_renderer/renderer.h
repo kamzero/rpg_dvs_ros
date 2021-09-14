@@ -10,6 +10,7 @@
 #include <sensor_msgs/CameraInfo.h>
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/image_encodings.h>
+#include <opencv2/opencv.hpp>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -43,6 +44,8 @@ private:
 
   ros::Subscriber event_sub_;
   ros::Subscriber camera_info_sub_;
+
+  std::string save_img_folder_ = "/home/kamzero/DVS/data/tracking_dataset/img/";
 
   image_transport::Publisher image_pub_;
   image_transport::Publisher undistorted_image_pub_;

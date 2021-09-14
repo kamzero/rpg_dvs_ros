@@ -62,6 +62,7 @@ void Renderer::cameraInfoCallback(const sensor_msgs::CameraInfo::ConstPtr& msg)
 void Renderer::imageCallback(const sensor_msgs::Image::ConstPtr& msg)
 {
   image_tracking_.imageCallback(msg);
+  static int i = 0;
 
   cv_bridge::CvImagePtr cv_ptr;
 
@@ -94,8 +95,9 @@ void Renderer::imageCallback(const sensor_msgs::Image::ConstPtr& msg)
     cv_bridge::CvImage cv_image;
     last_image_.copyTo(cv_image.image);
     cv_image.encoding = "bgr8";
-    std::cout << "publish image from callback" << std::endl;
+    std::cout << "publish image from callback  " << msg->header.stamp << std::endl;
     image_pub_.publish(cv_image.toImageMsg());
+    cv::imwrite(save_img_folder_+std::to_string(msg->header.stamp.toNSec())+".jpg", cv_image.image);
   }
   used_last_image_ = false;
 }
